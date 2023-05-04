@@ -1,0 +1,253 @@
+
+
+
+
+{#versión paginada #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Foro index{% endblock %}
+
+{% block body %}
+    <h1>Foros </h1>
+ {# total items count #}
+
+ {#
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+
+</div>
+
+#}
+<table>
+    <tr>
+        {# sorting of properties based on query components #}
+        <th>{{ knp_pagination_sortable(pagination, 'Foro', 'a.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'Creadate', 'a.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'creador', ['a.creadate', 'a.creadate']) }}</th>
+     {#  
+        <th{% if pagination.isSorted('a.tema') %} class="sorted"{% endif %}>
+        
+        </th>
+  
+
+        <th{% if pagination.isSorted(['a.creadate ', 'a.time']) %} class="sorted"{% endif %}>
+ {{ knp_pagination_sortable(pagination, 'creaador', ['a.creadate', 'a.creadate']) }}
+        
+          
+        </th>
+        #}
+        
+    </tr>
+
+    {# table body #}
+    {% for foro in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+          
+          <td> <a href="{{ path('app_foro_show', {'id': foro.id}) }}"> {{ foro.name }}    </a> 
+                
+                {% if foro.foto is empty %}
+
+                {% else %}
+                <br/>
+                  <img class="fotoForo" width="100px" src="/images/{{foro.foto}}"> </h6>
+                
+                 </a> 
+              {% endif %}
+
+       
+            <td>{{ foro.creadate | date('Y-m-d') }}</td>
+                 <td>{{ foro.creator }}</td>
+        {% if is_granted('ROLE_ADMIN') %}
+              <td>
+            
+           
+                   <a   class="btn2" href="{{ path('app_foro_edit', {'id': foro.id}) }}">edit</a>
+                </td>    
+            {% endif %} 
+
+    {#
+    #}
+            
+        </tr>
+    {% endfor %}
+</table>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+{# versión sin paginar 
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Foro index{% endblock %}
+
+{% block body %}
+
+
+
+
+
+<div class="example-wrapper">
+    <h1>Portada </h1>
+ <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>Creadate</th>
+                <th>Creador</th>
+   
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for foro in foros %}
+         {% if foro.oculto==null or foro.oculto==0 %}
+        
+            <tr>       
+
+           
+                <td> <a href="{{ path('app_foro_show', {'id': foro.id}) }}"> {{ foro.name }}    </a> 
+                
+                {% if foro.foto is empty %}
+
+    
+                {% else %}
+                <br/>
+                  <img class="fotoForo" width="100px" src="/images/{{foro.foto}}"> </h6>
+                
+                 </a> 
+              {% endif %}
+                
+                
+                 </td>
+                <td>{{ foro.creadate ? foro.creadate|date('Y-m-d H:i:s') : '' }}</td>
+              
+
+            <td> <a href="{{path('app_user_show', {'id': foro.creator.id }) }}">{{ foro.creator }}</a></td>
+
+    
+            
+         {% if is_granted('ROLE_ADMIN') %}
+                 <td>
+                
+                    <a   class="btn2" href="{{ path('app_foro_edit', {'id': foro.id}) }}">edit</a>
+                </td>  
+            {% endif %} 
+            
+            
+                
+            </tr>
+        {% else %}
+            <tr>
+               
+             
+            </tr>
+          
+            {% endif %}
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+ {% if is_granted('ROLE_ADMIN') %}
+    <a  class="btn3" href="{{ path('app_foro_new') }}">Create new</a>  
+            {% endif %} 
+
+</div>
+
+
+
+
+
+
+
+{# Old version 
+    <h1>Foro index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>Creadate</th>
+                <th>Creador</th>
+                <th>Temas</th>
+
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for foro in foros %}
+            <tr>
+                
+                <td>{{ foro.name }}</td>
+                <td>{{ foro.creadate ? foro.creadate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ foro.creator }}</td>
+                   
+         <td>
+           <ul>
+            {% for tema in foro.temas %}
+
+              <li>
+                
+        <a class="btn-primary" href="{{ path('app_comentario_temantario', {'id': tema.id }) }}">Comentar en             
+              {{ tema.title }} </a>
+
+                 {# <a class="btn-primary" href="{{ path('app_comentario_edit', {'id': tema.id }) }}">Comentar en             
+              {{ tema.title }} </a> 
+
+            </li>
+
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+            </ul>
+          </td>
+            
+              #}
+            {#Restricicón por user y register
+              {% if is_granted('ROLE_ADMIN') and foro.creator == app.user %} #}
+           
+           {# 
+              {% if is_granted('ROLE_ADMIN') %}
+                 <td>
+                    <a href="{{ path('app_foro_show', {'id': foro.id}) }}">show</a>
+                    <a href="{{ path('app_foro_edit', {'id': foro.id}) }}">edit</a>
+                </td>  
+            {% endif %} 
+            
+            
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+ {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_foro_new') }}">Create new</a>  
+            {% endif %} 
+
+
+
+
+{% endblock %}
+#}

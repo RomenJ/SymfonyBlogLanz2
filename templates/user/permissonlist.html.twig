@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>Cambiar permisos de Usuarios index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+           {#      <th>Id</th> #}
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Email</th>
+                <th>Avatar</th>
+                <th>¿Banedado?</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+              {#  <td>{{ user.id }}</td> #}
+                <td>{{ user.username }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.email }}</td>
+                
+                <td>  <img class="fotoAvatar" width="100x" src="/images/{{user.avatar }} ">  </td>
+                <td>{{ user.banned ? 'Yes' : 'No' }}</td>
+                <td>
+                   <a class="btn" href="{{ path('app_user_permisame', {'id': user.id}) }}">Cambiar permiso</a> 
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_new') }}">Create new</a>
+{% endblock %}

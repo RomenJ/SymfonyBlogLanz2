@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Foro{% endblock %}
+
+{% block body %}
+    <h1>Foro de  {{ foro.name }}</h1>
+ {% if foro.foto is empty %}
+
+                {% else %}
+                <br/>
+                  <img class="fotoForoShow" width="200px" src="/images/{{foro.foto}}"> 
+                
+             
+              {% endif %}
+                  <br/>
+    <table class="table">
+        <tbody>
+    
+            <tr>
+                <th>Descripción del foro</th>
+                <td>{{ foro.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Creadate</th>
+                <td>{{ foro.creadate ? foro.creadate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+
+        <tr>
+            <th> Temas </th>
+             <td>
+           <ul>
+            {% for tema in foro.temas %}
+
+              <li>
+                
+              <a class="btn-primary" href="{{ path('app_comentario_temantario', {'id': tema.id }) }}">Comentar en             
+              {{ tema.title }} </a>
+
+                 {# <a class="btn-primary" href="{{ path('app_comentario_edit', {'id': tema.id }) }}">Comentar en             
+              {{ tema.title }} </a> #}
+
+            </li>
+             
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+             {% if app.user %}
+            <a class="btn" href="{{ path('app_tema_newtema2', {'id': foro.id}) }}">Abrir nuevo tema </a>
+ 
+              {% endif %}
+    
+            </ul>
+              <td> 
+
+</tr>
+
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_foro_index') }}">back to list</a>
+{#Borrar un foro es una cosa muy seria, asi que se lo dejamos al admin role #}
+  {% if is_granted('ROLE_ADMIN') %}
+  
+    {{ include('foro/_delete_form.html.twig') }}
+   {% endif %}
+{% endblock %}

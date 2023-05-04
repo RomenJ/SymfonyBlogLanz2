@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Portada </h1>
+ <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>Creadate</th>
+                <th>Creador</th>
+        {#        <th>Temas</th>  #}
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for foro in foros %}
+       {% if foro.oculto==null or foro.oculto==0 %}
+        
+            <tr>       
+
+           
+                <td> <a href="{{ path('app_foro_show', {'id': foro.id}) }}"> {{ foro.name }}   
+                  
+                  <br/>
+                  <img class="fotoForo" width="100px" src="/images/{{foro.foto}}"> </h6>
+                
+                 </a> 
+                 </td>
+                <td>{{ foro.creadate ? foro.creadate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ foro.creator }}</td>       
+
+
+
+     {#
+         <td>
+        
+        
+           <ul>
+            {% for tema in foro.temas %}
+
+              <li>
+                
+        <a class="btn-primary" href="{{ path('app_comentario_temantario', {'id': tema.id }) }}">Comentar en             
+              {{ tema.title }} </a>
+
+            </li>
+
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+            </ul>
+          </td>
+            #}
+            {#Restricicón por user y register
+              {% if is_granted('ROLE_ADMIN') and foro.creator == app.user %} #}
+            
+            
+              {% if is_granted('ROLE_ADMIN') %}
+                 <td>
+                    <a class="btn" href="{{ path('app_foro_edit', {'id': foro.id}) }}">edit</a>
+                </td>  
+            {% endif %} 
+            
+            
+                
+            </tr>
+        {% else %}
+            <tr>
+               
+               {#  <td colspan="4">no records found</td> #}
+            </tr>
+            {# Flujo de oculto : #}
+            {% endif %}
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+ {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_foro_new') }}">Create new</a>  
+            {% endif %} 
+
+
+</div>
+{% endblock %}

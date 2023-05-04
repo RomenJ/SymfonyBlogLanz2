@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tema{% endblock %}
+
+{% block body %}
+    <h1>Tema</h1>
+
+    <table class="table">
+        <tbody>
+       
+            <tr>
+                <th><b>Title</b></th>
+                <td>{{ tema.title }}</td>
+            </tr>
+            <tr>
+                <th>Creadate</th>
+                <td>{{ tema.creadate ? tema.creadate|date('Y-m-d H:i:s') : '' }}</td>
+
+            </tr>
+          
+           {% for hilo in tema.comentarios %}
+          <tr> 
+             <th> Comentario:</th>
+             <td> {{ hilo.texto }} </td>    
+             <td>user: {{ hilo.user }} </td>   
+             <td>fecha: {{ hilo.creadate  ?  hilo.creadate|date('Y-m-d H:i:s') : ''  }} </td>   
+              {% if not loop.last %}, {% endif %}
+         </tr>    
+            {% endfor %}
+
+
+
+          
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tema_index') }}">back to list</a>
+
+    <a href="{{ path('app_tema_edit', {'id': tema.id}) }}">edit</a>
+
+    {{ include('tema/_delete_form.html.twig') }}
+{% endblock %}

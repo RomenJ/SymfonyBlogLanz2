@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tema index{% endblock %}
+
+{% block body %}
+    <h1>Administra cualquiera de los siguientes temas </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Título Tema </th>
+                <th> Oculto</th>
+                <th>Fecha de creaciones</th>
+                <th>Foro</th>
+                <th>Creador</th>
+                <th>Comentarios</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tema in temas %}
+            <tr>
+                
+                <td>{{ tema.title }}</td>
+                <td>{{ tema.oculto? 'Si' : 'No' }}</td>
+                <td>{{ tema.creadate ? tema.creadate|date('Y-m-d H:i:s') : '' }}</td>
+
+                <td>{{ tema.foro }}</td>
+                <td>{{ tema.creatortema }}</td>
+        <td>
+           <ul>
+            {% for comentario in tema.comentarios %}
+
+              <li>
+                
+    {#    <a class="btn-primary" href="{{ path('app_comentario_temantario', {'id': tema.id }) }}">Comentar en             #}
+              {{ comentario.texto}} </a>
+
+                 {# <a class="btn-primary" href="{{ path('app_comentario_edit', {'id': tema.id }) }}">Comentar en             
+              {{ tema.title }} </a> #}
+
+            </li>
+
+              {% if not loop.last %}, {% endif %}
+            {% endfor %}
+            </ul>
+          </td>
+
+          {% if is_granted('ROLE_ADMIN') %} 
+                  <td>
+                 
+                    <a href="{{ path('app_tema_show', {'id': tema.id}) }}">show</a>
+                    <a href="{{ path('app_tema_edit', {'id': tema.id}) }}">edit</a>
+                
+                </td>    
+            
+            {% endif %} 
+
+
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tema_new') }}">Create new</a>
+{% endblock %}

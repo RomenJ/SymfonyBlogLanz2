@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+ <td> <img class="fotoAvatar" width="100x" src="/images/{{user.avatar }} "> </td>
+    <table class="table">
+        <tbody>
+       
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+         
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Nombre del archivo de Avatar</th>
+                <td>{{ user.avatar }}</td>
+            </tr>
+            <tr>
+                <th>Banned</th>
+                <td>{{ user.banned ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn2" href="{{ path('app_user_index') }}">back to list</a>
+    {#Restricciones #}
+
+    {% if is_granted('ROLE_ADMIN') %}
+                 <td>
+                 {#   <a  class="btn2" href="{{ path('app_foro_show', {'id': foro.id}) }}">show</a> #}
+                   <a  class="btn" href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                </td>  
+         
+            
+            
+                
+            </tr>
+        {% else %}
+            <tr>
+               
+               {#  <td colspan="4">no records found</td> #}
+            </tr>
+            {# Flujo de oculto : #}
+            {% endif %}
+
+
+
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}

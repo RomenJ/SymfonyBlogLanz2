@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comentario index{% endblock %}
+
+{% block body %}
+    <h1>Modera comentarios</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+       
+                <th>Creadate</th>
+                <th>Oculto</th>
+                <th>Tema</th>
+                <th>Texto</th>
+                <th>Autor</th>
+                <th>Acción</th>
+            
+            </tr>
+        </thead>
+        <tbody>
+        {% for comentario in comentarios %}
+            <tr>
+                <td>{{ comentario.creadate ? comentario.creadate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ comentario.oculto ? 'Yes' : 'No' }}</td>  
+                <td>{{ comentario.tema }}</td>
+                <td>{{ comentario.texto }}</td>
+                <td>{{ comentario.user}}</td>
+            {% if is_granted('ROLE_ADMIN') %}
+                  <td>
+                    <a class="btn3" href="{{ path('app_user_ocultamentario', {'id': comentario.id}) }}">Ocultar</a>
+                    
+                </td>    
+            {% endif %} 
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn" href="{{ path('app_comentario_new') }}">Create new</a>
+{% endblock %}

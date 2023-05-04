@@ -1,0 +1,129 @@
+{#versión paginada #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Comentario index{% endblock %}
+
+{% block body %}
+    <h1>Comentario index</h1>
+ {# total items count #}
+
+ {#
+<div class="count">
+    {{ pagination.getTotalItemCount }}
+
+</div>
+
+#}
+<table>
+    <tr>
+        {# sorting of properties based on query components #}
+        <th>{{ knp_pagination_sortable(pagination, 'Tema', 'a.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'usuario', 'a.id') }}</th>
+        <th{% if pagination.isSorted('a.tema') %} class="sorted"{% endif %}>
+        
+            {{ knp_pagination_sortable(pagination, 'Comentario', 'a.tema') }}
+        </th>
+  
+
+        <th{% if pagination.isSorted(['a.creadate ', 'a.time']) %} class="sorted"{% endif %}>
+            {{ knp_pagination_sortable(pagination, 'fecha', ['a.creadate', 'a.creadate']) }}
+        </th>
+        
+    </tr>
+
+    {# table body #}
+    {% for comentario in pagination %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+          
+            <td><a class="btn-primary" href="{{ path('app_comentario_temantario', {'id': comentario.tema.id }) }}">            
+              {{ comentario.tema.title }} </a></td>
+            <td> <a href="{{path('app_user_show', {'id': comentario.user.id}) }}">{{ comentario.user  }}
+            <img class="fotoAvatar" width="100x" src="/images/{{comentario.user.avatar }} "></a>
+            </td>
+
+            <td>{{ comentario.texto }}</td>
+            <td>{{ comentario.creadate | date('Y-m-d') }}</td>
+        {% if is_granted('ROLE_USER') and comentario.user == app.user %}
+              <td>
+            
+                    <a href="{{ path('app_comentario_show', {'id': comentario.id}) }}">show</a>
+                    <a href="{{ path('app_comentario_edit', {'id': comentario.id}) }}">edit</a>
+                </td>    
+            {% endif %} 
+
+    {#
+    #}
+            
+        </tr>
+    {% endfor %}
+</table>
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% endblock %}
+
+
+{# versión sin paginar 
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Comentario index{% endblock %}
+
+{% block body %}
+    <h1>Comentario index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Creadate</th>
+                <th>Tema</th>
+                <th>Texto</th>
+                 <th>Autor</th>
+            
+            </tr>
+        </thead>
+        <tbody>
+        {% for comentario in comentarios %}
+           {% if comentario.oculto  != 1  %}
+            <tr>
+                <td>{{ comentario.id }}</td>
+                <td>{{ comentario.creadate ? comentario.creadate|date('Y-m-d H:i:s') : '' }}</td>
+  
+                <td>{{ comentario.tema }}</td>
+                <td>{{ comentario.texto }}</td>
+              
+              
+                <td>{{ comentario.user}}</td>
+
+
+                
+            {% if is_granted('ROLE_USER') and comentario.user == app.user %}
+                  <td>
+                    <a href="{{ path('app_comentario_show', {'id': comentario.id}) }}">show</a>
+                    <a href="{{ path('app_comentario_edit', {'id': comentario.id}) }}">edit</a>
+                </td>    
+            {% endif %} 
+                
+
+
+            </tr>
+        {% else %}
+            
+            <tr>
+            
+
+            </tr>
+            {% endif %} 
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_comentario_new') }}">Create new</a>
+{% endblock %}
+
+#}
+

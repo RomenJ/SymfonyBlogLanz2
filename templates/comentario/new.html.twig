@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Comentario{% endblock %}
+
+{% block body %}
+    <h1>Comentarios anteriores</h1>
+   
+   {% if temacomentado is defined %}
+  
+
+
+<table class="table">
+  <thead>
+            <tr>
+                <th>Id</th>
+                <th>Creadate</th>
+                <th>Tema</th>
+                <th>Texto</th>
+                 
+                 <th>Avatar</th>
+                 <th>Autor</th>
+                
+           
+            </tr>
+        </thead>
+        <tbody>
+    {% for comentario in comentariosxid %}
+            <tr>
+                <td>{{ comentario.id }}</td>
+                <td>{{ comentario.creadate ? comentario.creadate|date('Y-m-d H:i:s') : '' }}</td>
+     {#         <td>{{ comentario.oculto ? 'Yes' : 'No' }}</td>  #}
+                <td>{{ comentario.tema }}</td>
+                <td>{{ comentario.texto }}</td>
+              
+              
+                <td><img class="fotoAvatar" src="/images/{{comentario.user.avatar}}" alt="avatar " width="80px" height="600"></td>
+                <td class="miniMarginLeft"> {{ comentario.user}}</td>
+             
+
+
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+     </tbody>
+    </table>
+  
+  <h5> Hilo/Tema22: {{temacomentado}}</h5>
+  <p> {{textocomentado}}</p>
+
+    {% endif %}
+   {% if is_granted('ROLE_USER') %}
+  
+  
+    {{ include('comentario/_form.html.twig') }}
+{% endif %}
+    <a href="{{ path('app_comentario_index') }}">back to list</a>
+{% endblock %}
