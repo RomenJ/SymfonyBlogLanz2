@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2023 a las 21:47:43
+-- Tiempo de generación: 01-06-2023 a las 17:49:39
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -65,7 +65,13 @@ INSERT INTO `comentario` (`id`, `user_id`, `tema_id`, `creadate`, `oculto`, `tex
 (28, 8, 13, '2023-05-02 18:28:15', NULL, 'la inquisición en muy divertida, se hacen amigos muy fácilmente...si uno sabe como usarla'),
 (29, 3, 13, '2023-05-02 18:41:25', NULL, 'cuidado pepinillo,2, tienes sus peligros jugar con la inkisición xd'),
 (30, 3, 2, '2023-05-02 21:18:32', NULL, 'pues muy sencillo, habla con tu narrador y te comentará que acciones/comportamientos te subirán humanidad'),
-(31, 8, 2, '2023-05-02 21:28:27', NULL, 'en una de esas, tuve que ayudar a la viejecita a cruzar la calle para que el narrador me subiera un punto de humanidad');
+(31, 8, 2, '2023-05-02 21:28:27', NULL, 'en una de esas, tuve que ayudar a la viejecita a cruzar la calle para que el narrador me subiera un punto de humanidad'),
+(32, 3, 12, '2023-05-03 22:28:08', NULL, 'el abrazo es una de los cuestiones más importantes'),
+(33, 2, 12, '2023-05-04 12:10:59', NULL, 'SI ESPERAS QUE TUS PJ\'S SOBREVIVAN SÍ ES IMPORYANTES, SI ES UNA PARTIDA MONOSESIÓN...NO PIERDAD EL TIEMPO, ANA'),
+(34, 2, 2, '2023-05-04 12:12:45', NULL, 'YO PREFIERO SUBIR HUMANIDAD CON LOS PUNTOS DE XP'),
+(35, 3, 12, '2023-05-08 16:24:30', NULL, 'Yo tebgo razon'),
+(36, 10, 12, '2023-06-01 16:10:07', NULL, 'no se peleen que el troll aquí soy yo'),
+(37, 10, 14, '2023-06-01 16:15:11', NULL, 'hola soy un troll super malo y aquí os doy consejos de cómo trollear con estilo para que tus jugarores no se enfaden sin motivo');
 
 -- --------------------------------------------------------
 
@@ -165,7 +171,8 @@ INSERT INTO `tema` (`id`, `creatortema_id`, `foro_id`, `title`, `creadate`, `ocu
 (10, 2, 9, 'El Manto en el mundo de tinieblas', '2023-04-05 14:53:21', NULL, 'Jugar con diversos personajes en el mundo de Tinieblas es posible, pero no fácil'),
 (11, 3, 10, 'Fuego', '2023-04-05 17:46:59', NULL, 'El fuego afecta por igual  a todas las criaturas de mundo de Tinieblas?Eh, eh?'),
 (12, 2, 1, 'el abrazo vamp', '2023-05-02 12:09:36', 0, 'cómo definir bien un pj con trasfondo'),
-(13, 8, 2, 'la inquisición 2', '2023-05-02 18:20:58', NULL, 'descripción de la inquisición 2');
+(13, 8, 2, 'la inquisición 2', '2023-05-02 18:20:58', NULL, 'descripción de la inquisición 2'),
+(14, 10, 2, 'la importancia de trollear a tus jugadores con coherencia', '2023-06-01 16:13:59', NULL, 'la mala suerte ocurre, y unos contextos son más proclives que otros a ella. no los mates por matarlos, espera que la líen para elegir el momento');
 
 -- --------------------------------------------------------
 
@@ -188,14 +195,16 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `roles`, `password`, `email`, `avatar`, `banned`) VALUES
-(1, 'user1', '[]', '$2y$13$GaqCtYR7enfIZ.sZcYJS.eoPLFoj0CkHM2JT2ymBI5CUiz541ZGPy', 'user1@user1.com', 'Leonardo_Diffusion_A_high_resolution_photo_of_a_wolf_wearing_3.jpg', NULL),
+(1, 'user1', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$GaqCtYR7enfIZ.sZcYJS.eoPLFoj0CkHM2JT2ymBI5CUiz541ZGPy', 'user1@user1.com', 'Leonardo_Diffusion_A_high_resolution_photo_of_a_wolf_wearing_3.jpg', NULL),
 (2, 'pepe', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$TKeSkDwXji24TGqqihs8F.wkAIFACprXd15aG81eLpF.zKfgntTSu', 'pepe@pepe.es', 'davinel-642451c7769ea.png', NULL),
 (3, 'ana', '[]', '$2y$13$rwgqvSI.8Dqkfhh9YlYXq..ulRA61yv0Qpz3iAyYUXztWsEyF6fGS', 'ana@ana.es', 'killy-642454dd08b22.png', NULL),
 (4, 'userfail', '{\"1\":\"ROLE_USER\",\"2\":\"ROLE_ADMIN\"}', '$2y$13$HoNZh3KbxMTP3mmGLg4Nd.D/7MPgoPE5RSwqtWOsSv49pTBO/4xDq', 'userfail@fail.com', 'lecter-6431ac4cd5cee.png', 1),
 (5, 'lara', '[]', '$2y$13$5tyNffUrgXaCsrUgo7o3CeTO7fGseMYxcTclWkW7aEL7e6Bvv9z7u', 'lara@lara.es', 'Leonardo_Diffusion_MasterPiece_high_detail_a_prettyskeleton_w_3.jpg', NULL),
 (6, 'lara2', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$4SItwAmjabJU173bS34pQuNypRg01.BfzYNmQOtIghk9HuZXHItf6', 'lara@lara.es', 'CapturaCibo-6433fecd21d1c.png', NULL),
 (7, 'olga', '[]', '$2y$13$OUqKwSUJbC9gFuvLMEN3N.PUgL.7sIAemzK3HpO8IRreOm72tXQ/2', 'olga@o.es', 'Diseno-sin-titulo-643421154f1e3.png', 1),
-(8, 'pepinillo2', '[]', '$2y$13$CCyxQKVlmUSTTIzdzX9a2edIN0eKsoclgNMztnxC8hD5eettS5eNC', 'pepe@epe.es', 'Leonardo-Diffusion-a-cute-sheepchild-wearing-a-blue-and-silver-3-645129566fa57.jpg', NULL);
+(8, 'pepinillo2', '[]', '$2y$13$CCyxQKVlmUSTTIzdzX9a2edIN0eKsoclgNMztnxC8hD5eettS5eNC', 'pepe@epe.es', 'Leonardo-Diffusion-a-cute-sheepchild-wearing-a-blue-and-silver-3-645129566fa57.jpg', NULL),
+(9, 'sdf', '[\"ROLE_USER\",\"ROLE_ADMIN\"]', '$2y$13$ksdVk/nI1MfMiKuGgdKY8usLSc..FW.ywbHd3PZzaBfCv8U08fMSe', 'dsf@ajshd.com', 'Leonardo-Diffusion-a-pretty-woman-patinted-like-Sally-Tim-Burt-1-2-r-6478a2709a994.jpg', NULL),
+(10, 'trollsupermalo', '[]', '$2y$13$x0qomsBCsEtzmk504xNFX.QH8aBho89JLsweFHz5m5VyGkSJqG4Li', 'trollisgood@tr.com', 'Leonardo-Diffusion-Christmas-purple-Pikachu-happy-smiling-th-0-6478a65e1f3ee.jpg', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -254,7 +263,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `foro`
@@ -272,13 +281,13 @@ ALTER TABLE `messenger_messages`
 -- AUTO_INCREMENT de la tabla `tema`
 --
 ALTER TABLE `tema`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas

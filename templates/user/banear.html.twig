@@ -3,7 +3,7 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <h1>Listado de usuarios</h1>
 
     <table class="table">
         <thead>
@@ -25,7 +25,7 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.email }}</td>
                 
-                <td>  <img class="fotoAvatar" width="100x" src="/images/{{user.avatar }} ">  </td>
+                <td>  <img class="fotoAvatar" width="100px" src="/images/{{user.avatar }} ">  </td>
                 <td>{{ user.banned ? 'Yes' : 'No' }}</td>
                 <td>
                     <a class="btn" href="{{ path('app_user_baneame', {'id': user.id}) }}">Banéamelo/a</a>

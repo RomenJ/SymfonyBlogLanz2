@@ -9,7 +9,7 @@ use App\Repository\ForoRepository;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(ForoRepository $foroRepository): Response
     {
         return $this->render('home/index.html.twig', [

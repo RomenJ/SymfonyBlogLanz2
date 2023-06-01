@@ -27,25 +27,12 @@ class UserController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             5 /*limit per page*/
         );
-    
-        // parameters to template
-       // return $this->render('article/list.html.twig', ['pagination' => $pagination]);
-
         return $this->render('user/index.html.twig', [
             'pagination' => $pagination,
             'comentarios' => $query,
             'Todosloscomentarios'=>$userRepository->findMyUsers()
 
         ]);
-
-
-
-
-        /*
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);*/
-
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
@@ -167,7 +154,15 @@ public function baneame(Request $request, User $user, UserRepository $userReposi
         'multiple' => false,
         'label' => '¿Está seguro/a de banear al user?',
     ])
-    ->add('save', SubmitType::class, ['label' => 'Guardar cambios'])
+    //->add('save', SubmitType::class, ['label' => 'Guardar cambios'])
+
+    ->add('save', SubmitType::class, [
+        'label' => 'Guardar cambios',
+        'attr' => [
+            'class' => 'btn2',
+        ],
+    ])
+
     ->getForm();
 
 $form->handleRequest($request);
@@ -180,30 +175,13 @@ if ($form->isSubmitted() && $form->isValid()) {
     $entityManager->flush();
    */
     return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-    //return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+    // redirect original: return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
 }
 
 return $this->render('user/baneame.html.twig', [
     'form' => $form->createView(),
     'user' => $user,
 ]);
-
-    /*
-    $form = $this->createForm(UserType::class, $user);
-   
-   
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $userRepository->save($user, true);
-
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    return $this->renderForm('user/baneame.html.twig', [
-        'user' => $user,
-        'form' => $form,
-    ]);*/
 
 }
 
@@ -215,7 +193,6 @@ return $this->render('user/baneame.html.twig', [
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
-
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }

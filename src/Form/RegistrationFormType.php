@@ -55,15 +55,17 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+    /**Registringido el permiso para register: Sólo el damin puede conceder permisos de admin */
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'User' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN',
+                    
                 ],
                 'expanded' => true,
                 'multiple' => true,
                 'data' => $entity->getRoles() // Current roles assigned..
             ])
+            
         ;
     }
 
